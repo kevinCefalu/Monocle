@@ -1,6 +1,6 @@
 function New-MonocleBrowser
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([OpenQA.Selenium.Remote.RemoteWebDriver])]
     param(
         [Parameter(Mandatory=$true)]
@@ -25,8 +25,21 @@ function New-MonocleBrowser
         [string]
         $BinaryPath,
 
+        [Parameter(Mandatory=$true, ParameterSetName = 'Hide')]
         [switch]
-        $Hide
+        $Hide,
+
+        [Parameter(Mandatory=$true, ParameterSetName = 'Minimized')]
+        [switch]
+        $Minimized,
+
+        [Parameter(Mandatory=$true, ParameterSetName = 'Maximized')]
+        [switch]
+        $Maximized,
+
+        [Parameter(Mandatory=$true, ParameterSetName = 'Fullscreen')]
+        [switch]
+        $Fullscreen
     )
 
     try {
@@ -36,6 +49,19 @@ function New-MonocleBrowser
         }
 
         Set-MonocleTimeout -Timeout $Timeout
+
+        if ($Minimized) {
+            Write-Verbose 'Minimizing browser window';
+            $Browser.Manage().Window.Minimize();
+        } elseif ($Maximized) {
+            Write-Verbose 'Maximizing browser window';
+            $Browser.Manage().Window.Maximize();
+        }
+        elseif ($Fullscreen) {
+            Write-Verbose 'Setting browser window to fullscreen';
+            $Browser.Manage().Window.FullScreen();
+        }
+
         return $Browser
     }
     catch {
