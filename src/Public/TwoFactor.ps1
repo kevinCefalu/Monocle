@@ -17,7 +17,7 @@ function Get-Monocle2FACode
         $DateTime = Get-Date
     }
 
-    Write-MonocleHost -Message "Genetaring 2FA code for: $($DateTime.ToString('r'))"
+    Write-MonocleHost -Message "Generating 2FA code for: $($DateTime.ToString('r'))"
 
     # get pin for the supplied date
     $interval = Get-Monocle2FAInterval -DateTime $DateTime
