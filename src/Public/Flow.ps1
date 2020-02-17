@@ -56,8 +56,7 @@ function New-MonocleBrowser
         } elseif ($Maximized) {
             Write-Verbose 'Maximizing browser window';
             $Browser.Manage().Window.Maximize();
-        }
-        elseif ($Fullscreen) {
+        } elseif ($Fullscreen) {
             Write-Verbose 'Setting browser window to fullscreen';
             $Browser.Manage().Window.FullScreen();
         }
